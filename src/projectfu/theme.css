@@ -1,0 +1,256 @@
+/*
+ * Common styles
+ */
+.theme-projectfu {
+  --sah-fabula-ultima-portrait-size: 8rem;
+
+  font-family: var(--font-primary);
+
+  .ib-font-hero {
+    font-family: var(--font-secondary);
+    text-transform: unset;
+  }
+
+  &:is(#ib-action-menu, #ib-sub-menu-container),
+  .ib-card {
+    gap: 0;
+    padding: 4px;
+    border: solid;
+    border-color: var(--pfu-color-control-border);
+    border-width: var(--pfu-border-width);
+    border-radius: var(--pfu-border-radius-medium);
+    color: var(--pfu-color-control-content);
+    background: var(--pfu-color-control-fill);
+    backdrop-filter: var(--pfu-backdrop-filter);
+    box-shadow: 0 3px 6px rgb(0 0 0 / 45%);
+  }
+
+  .ib-menu-header {
+    padding: 0 0.5rem;
+    border-radius: 2px;
+    font-size: 1.6rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--pfu-color-app-item-header-content);
+    text-align: center;
+    text-shadow: 1px 1px var(--pfu-color-app-item-header-shadow);
+    text-transform: uppercase;
+    background: var(--pfu-color-app-item-header-fill);
+    box-shadow: 1px 2px var(--pfu-color-app-item-header-shadow);
+  }
+
+  .ib-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.5rem;
+    padding: 0.125em 0.3em;
+    border: 0.01em solid #148782;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: var(--pfu-color-app-control-content);
+    text-decoration: none;
+    background: var(--pfu-color-app-control-fill);
+    box-shadow: 1px 2px var(--pfu-color-app-control-shadow);
+    transition:
+      -webkit-transform 0.2s ease-in-out,
+      -webkit-box-shadow 0.2s ease-in-out;
+    transition:
+      transform 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out;
+    transition:
+      transform 0.2s ease-in-out,
+      box-shadow 0.2s ease-in-out,
+      -webkit-transform 0.2s ease-in-out,
+      -webkit-box-shadow 0.2s ease-in-out;
+
+    &.active {
+      transform: unset;
+      margin: 1px -1px -1px 1px;
+      border: thin solid var(--pfu-color-app-control-active-border);
+      color: var(--pfu-color-app-control-active-content);
+      text-shadow: unset;
+      background: var(--pfu-color-app-control-active-fill);
+      box-shadow: 0 1px var(--pfu-color-app-control-active-shadow);
+      transition: none;
+    }
+  }
+
+  .ib-search-container {
+    font-style: normal;
+    color: var(--pfu-color-app-control-content);
+    background: var(--pfu-color-app-control-fill);
+  }
+
+  .ib-search-input {
+    font-family: var(--font-primary);
+
+    /* TODO: Style the search input's placeholder? */
+  }
+
+  &:is(#ib-action-menu, #ib-sub-menu-container) {
+    gap: 0;
+    padding: 4px;
+    border: solid;
+    border-color: var(--pfu-color-control-border);
+    border-width: var(--pfu-border-width);
+    border-radius: var(--pfu-border-radius-medium);
+    color: var(--pfu-color-control-content);
+    background: var(--pfu-color-control-fill);
+    backdrop-filter: var(--pfu-backdrop-filter);
+    box-shadow: 0 3px 6px rgb(0 0 0 / 45%);
+  }
+
+  .ib-quick-slot-container {
+    --sah-fabula-quickslot-size: 4rem;
+
+    direction: rtl;
+    display: grid;
+    grid-template-columns: repeat(
+      4,
+      minmax(var(--sah-fabula-quickslot-size), 1fr)
+    );
+  }
+
+  .ib-quick-slot {
+    aspect-ratio: 1;
+    height: var(--sah-fabula-quickslot-size);
+  }
+
+  .ib-action-btn,
+  .ib-item-content {
+    all: unset;
+    cursor: var(--cursor-pointer);
+    display: flex;
+    gap: 0;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    border: solid;
+    border-color: transparent;
+    border-width: var(--pfu-border-width);
+    border-radius: var(--pfu-border-radius-medium);
+    font-size: 1.4rem;
+    line-height: 15px;
+    color: var(--color-text-emphatic);
+    text-align: left;
+    transition: none;
+
+    &:hover {
+      border-color: var(--pfu-color-control-active-border);
+      color: var(--pfu-color-control-focus-content);
+      background: var(--pfu-color-control-active-fill);
+    }
+  }
+
+  .ib-action-btn {
+    padding: 8px;
+  }
+
+  .ib-btn-content {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: start;
+  }
+
+  .ib-item-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+    line-height: 1.4em;
+
+    .ib-font-hero {
+      font-family: var(--font-primary);
+    }
+
+    /* Not the clearest, but this should target the cost string, which is styled inline. */
+    div + div .text-sm {
+      color: var(--color-text-subtle) !important;
+    }
+  }
+
+  .ib-card {
+    display: grid;
+    grid-template-areas: "portrait stats";
+    grid-template-columns: var(--sah-fabula-ultima-portrait-size) 1fr;
+    gap: 1rem;
+    width: calc(var(--sah-fabula-ultima-portrait-size) + 225px);
+  }
+
+  .ib-portrait-wrapper {
+    grid-area: portrait;
+    aspect-ratio: 200 / 200;
+    width: var(--sah-fabula-ultima-portrait-size);
+    height: var(--sah-fabula-ultima-portrait-size);
+    border: 1px solid #aeb8a8;
+    border-radius: 10px 0 0 10px;
+    object-fit: contain;
+    object-position: center;
+    background: var(--pfu-color-app-body-primary-fill)
+      linear-gradient(to right, var(--color-primary), var(--color-secondary));
+  }
+
+  .ib-stats-box {
+    display: grid;
+    grid-area: stats;
+    grid-template-areas: "name" "conditions" "bars" "dots" "numbers";
+    gap: 0.25rem;
+
+    .ib-conditions {
+      position: static;
+      grid-area: conditions;
+    }
+
+    .ib-name {
+      grid-area: name;
+      font-family: var(--font-primary);
+      font-size: 1.25rem;
+      font-weight: var(--font-weight-bold);
+    }
+
+    .ib-bars-wrapper {
+      display: grid;
+      grid-area: bars;
+      grid-template-columns: auto 1fr;
+      gap: 0.5rem 0.25rem;
+
+      .ib-bar-row {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: subgrid;
+        align-items: center;
+        height: 1rem;
+
+        .ib-bar-container {
+          border-top: 0.125em solid rgb(0 0 0 / 50%);
+          border-left: 0.125em solid rgb(0 0 0 / 25%);
+        }
+
+        .ib-bar-fill {
+          background: linear-gradient(
+            to right,
+            var(--attr-color),
+            color-mix(in oklch, var(--attr-color), white 35%)
+          );
+        }
+      }
+
+      .ib-label {
+        font-family: var(--font-secondary);
+        font-size: 1rem;
+        font-weight: var(--font-weight-bold);
+        line-height: 1em;
+        text-align: right;
+      }
+
+      .ib-val {
+        right: 1ch;
+        line-height: 1em;
+        color: color-mix(in oklch, var(--attr-color), black 55%);
+        text-align: right;
+      }
+    }
+  }
+}
