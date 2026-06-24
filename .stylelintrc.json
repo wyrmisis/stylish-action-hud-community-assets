@@ -1,0 +1,6 @@
+{
+  "extends": ["stylelint-config-clean-order", "stylelint-config-standard"],
+  "rules": {
+    "no-descending-specificity": null
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "id": "stylish-action-hud-community-assets",
+  "title": "Stylish Action HUD Community Assets",
+  "description": "",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "wyrmisis",
+      "discord": "wyrmisis"
+    }
+  ],
+  "compatibility": {
+    "minimum": "13",
+    "verified": "14",
+    "maximum": "14"
+  },
+  "relationships": {
+    "requires": [
+      {
+        "id": "stylish-action-hud",
+        "type": "module",
+        "compatibility": {
+          "minimum": "2.5.2"
+        }
+      }
+    ]
+  },
+  "esmodules": ["src/index.js"],
+  "styles": ["src/fabula-ultima/theme.css"],
+  "url": "TODO",
+  "manifest": "TODO",
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "html", "hbs", "json"],
+      "paths": ["src", "lang/en.json"]
+    }
+  }
+}
