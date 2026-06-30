@@ -1,0 +1,14 @@
+{
+  "SAHCommunityAssets": {
+    "ARS": {
+      "MenuOptions": {
+        "Attack": "Attack",
+        "AbilityChecks": "Abilities",
+        "SavingThrows": "Saves",
+        "Actions": "Action",
+        "Skills": "Skill",
+        "PreparedSpells": "Cast"
+      }
+    }
+  }
+}

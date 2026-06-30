@@ -29,6 +29,13 @@
   "styles": ["src/projectfu/theme.css"],
   "url": "TODO",
   "manifest": "TODO",
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    }
+  ],
   "flags": {
     "hotReload": {
       "extensions": ["css", "html", "hbs", "json"],
