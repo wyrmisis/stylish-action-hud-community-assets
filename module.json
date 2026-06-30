@@ -26,7 +26,7 @@
     ]
   },
   "esmodules": ["src/index.js"],
-  "styles": ["src/fabula-ultima/theme.css"],
+  "styles": ["src/projectfu/theme.css"],
   "url": "TODO",
   "manifest": "TODO",
   "flags": {

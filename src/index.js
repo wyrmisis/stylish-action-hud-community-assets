@@ -1,1 +1,1 @@
-import "./projectfu";
+import "./projectfu/index.js";
