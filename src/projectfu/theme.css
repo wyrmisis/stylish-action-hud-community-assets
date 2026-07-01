@@ -250,6 +250,7 @@
         line-height: 1em;
         color: color-mix(in oklch, var(--attr-color), black 55%);
         text-align: right;
+        font-weight: bold;
       }
     }
   }

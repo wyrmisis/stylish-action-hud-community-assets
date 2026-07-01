@@ -8,7 +8,7 @@ Hooks.once("stylish-action-hud.apiReady", (api) => {
     isCompatible: (context) => context.system.id === "projectfu",
   });
 
-  api.registerTheme("proejctfu", {
+  api.registerTheme("projectfu", {
     label: "ProjectFU",
     defaults: {
       scale: 1,

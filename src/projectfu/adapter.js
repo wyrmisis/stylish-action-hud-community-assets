@@ -7,14 +7,23 @@ export class ProjectFUAdapter {
     if (!configAttributes || configAttributes.length === 0) return [];
 
     return configAttributes.map((attr) => {
-      const value = foundry.utils.getProperty(actor, `${attr.path}.value`) ?? 0;
-      const max = foundry.utils.getProperty(actor, `${attr.path}.max`) ?? 0;
+      let value =
+        foundry.utils.getProperty(
+          actor,
+          attr.style === "number" || attr.style === "badge" || attr.maxPath
+            ? attr.path
+            : `${attr.path}.value`,
+        ) ?? 0;
+
+      const max =
+        foundry.utils.getProperty(
+          actor,
+          attr.maxPath ? attr.maxPath : `${attr.path}.max`,
+        ) ?? 0;
       const percent = Math.clamp((value / (max || 1)) * 100, 0, 100);
 
       return {
-        path: attr.path,
-        label: attr.label,
-        color: attr.color,
+        ...attr,
         value: value,
         max: max,
         percent: percent,
@@ -332,29 +341,30 @@ export class ProjectFUAdapter {
       {
         path: "system.resources.hp",
         label: "HP",
-        icon: "fa-solid fa-heart",
+        icon: "fu-icon--s fu-hp",
         color: "#17b924",
         style: "bar",
       },
       {
         path: "system.resources.mp",
-        icon: "fa-solid fa-sparkle",
+        icon: "fu-icon--s fu-mp",
         label: "MP",
         color: "#16aad6",
         style: "bar",
       },
       {
         path: "system.resources.ip",
-        icon: "fa-solid fa-backpack",
+        icon: "fu-icon--s fu-ip",
         label: "IP",
         color: "#d68931",
         style: "bar",
       },
       {
-        path: "system.resources.fp",
-        icon: "fa-solid fa-feather",
+        path: "system.resources.fp.value",
+        icon: "fu-icon--s fu-fp",
         label: "FP",
-        style: "number",
+        textColor: "#ffffff",
+        style: "badge",
       },
     ];
   }
