@@ -5,7 +5,7 @@ const CATEGORY_KEYS = {
 
 export class MoShAdapter {
   constructor() {
-    this.systemId = "ars";
+    this.systemId = "mosh";
   }
 
   getStats(actor, configAttributes) {
