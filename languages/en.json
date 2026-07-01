@@ -9,6 +9,12 @@
         "Skills": "Skill",
         "PreparedSpells": "Cast"
       }
+    },
+    "Mosh": {
+      "MenuOptions": {
+        "Stats": "Stats",
+        "Saves": "Saves"
+      }
     }
   }
 }
