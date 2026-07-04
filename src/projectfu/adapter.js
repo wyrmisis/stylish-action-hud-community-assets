@@ -120,20 +120,24 @@ export class ProjectFUAdapter {
    * @returns {Object} - {title, items, hasTabs, tabLabels, ...}
    */
   async getSubMenuData(actor, categoryId) {
-    // // Parse category index
-    // const parts = categoryId.split("-");
-    // const index = parseInt(parts[parts.length - 1]);
+    const menuData = this.#getMenuData(actor, categoryId);
+    const systemId = menuData?.systemId || menuData?.id || categoryId;
 
-    // // Get category definition
-    // const categories = this.getActionCategories(actor);
-    // const category = categories[index];
+    return await this.#getSystemSubMenuData(actor, systemId, menuData);
+  }
 
-    // if (!category?.systemId) {
-    //   return { title: "", items: [] };
-    // }
+  #getMenuData(actor, categoryId) {
+    const customMatch = String(categoryId || "").match(/^custom-(\d+)$/);
+    if (customMatch) {
+      const config = game.settings.get("stylish-action-hud", "configuration") || {};
+      const index = Number.parseInt(customMatch[1], 10);
+      return config.customMenu?.[index] || null;
+    }
 
-    // return await this.#getSystemSubMenuData(actor, category.systemId, category);
-    return await this.#getSystemSubMenuData(actor, categoryId);
+    return this.getActionCategories(actor).find(
+      (category) =>
+        category.id === categoryId || category.systemId === categoryId,
+    );
   }
 
   /**
@@ -141,7 +145,7 @@ export class ProjectFUAdapter {
    * @todo Add skills
    * @todo Add
    */
-  async #getSystemSubMenuData(actor, systemId) {
+  async #getSystemSubMenuData(actor, systemId, menuData) {
     switch (systemId) {
       case "skills":
         return this.#getSkills(actor);
@@ -150,7 +154,7 @@ export class ProjectFUAdapter {
       case "spells":
         return this.#getSpells(actor);
       default:
-        return { title: menuData.label, items: [] };
+        return { title: menuData?.label || "", items: [] };
     }
   }
 
