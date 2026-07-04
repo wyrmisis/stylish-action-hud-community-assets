@@ -1,5 +1,8 @@
-export class ProjectFUAdapter {
+import { BaseSystemAdapter } from "../../../stylish-action-hud/scripts/systems/base.js";
+
+export class ProjectFUAdapter extends BaseSystemAdapter {
   constructor() {
+    super();
     this.systemId = "projectfu";
   }
 
@@ -120,20 +123,30 @@ export class ProjectFUAdapter {
    * @returns {Object} - {title, items, hasTabs, tabLabels, ...}
    */
   async getSubMenuData(actor, categoryId) {
-    // // Parse category index
-    // const parts = categoryId.split("-");
-    // const index = parseInt(parts[parts.length - 1]);
+    const customIndex = this.#getCustomCategoryIndex(categoryId);
+    if (customIndex !== null) {
+      return await super.getSubMenuData(actor, categoryId);
+    }
 
-    // // Get category definition
-    // const categories = this.getActionCategories(actor);
-    // const category = categories[index];
+    const menuData = this.#getMenuData(actor, categoryId);
+    const systemId = menuData?.systemId || menuData?.id || categoryId;
 
-    // if (!category?.systemId) {
-    //   return { title: "", items: [] };
-    // }
+    return await this._getSystemSubMenuData(actor, systemId, menuData);
+  }
 
-    // return await this.#getSystemSubMenuData(actor, category.systemId, category);
-    return await this.#getSystemSubMenuData(actor, categoryId);
+  #getCustomCategoryIndex(categoryId) {
+    const customMatch = String(categoryId || "").match(/^custom-(\d+)$/);
+    if (!customMatch) return null;
+
+    const index = Number.parseInt(customMatch[1], 10);
+    return Number.isInteger(index) ? index : null;
+  }
+
+  #getMenuData(actor, categoryId) {
+    return this.getActionCategories(actor).find(
+      (category) =>
+        category.id === categoryId || category.systemId === categoryId,
+    );
   }
 
   /**
@@ -141,7 +154,7 @@ export class ProjectFUAdapter {
    * @todo Add skills
    * @todo Add
    */
-  async #getSystemSubMenuData(actor, systemId) {
+  async _getSystemSubMenuData(actor, systemId, menuData) {
     switch (systemId) {
       case "skills":
         return this.#getSkills(actor);
@@ -150,7 +163,7 @@ export class ProjectFUAdapter {
       case "spells":
         return this.#getSpells(actor);
       default:
-        return { title: menuData.label, items: [] };
+        return { title: menuData?.label || "", items: [] };
     }
   }
 
@@ -308,8 +321,12 @@ export class ProjectFUAdapter {
     else return new projectfu.ActionHandler(actor).handleAction(action, false);
   }
 
-  useItem(actor, itemId) {
-    actor.items.get(itemId).roll();
+  async useItem(actor, itemId) {
+    if (itemId.startsWith("macro-")) {
+      return await super.useItem(actor, itemId);
+    }
+
+    actor.items.get(itemId)?.roll();
   }
   getResourceForEdit(actor, itemId) {
     actor.items.get(itemId)?.sheet?.render(true);
