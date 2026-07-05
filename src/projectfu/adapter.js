@@ -1,6 +1,5 @@
-import { BaseSystemAdapter } from "../../../stylish-action-hud/scripts/systems/base.js";
-
-export class ProjectFUAdapter extends BaseSystemAdapter {
+export function createProjectFUAdapter(BaseSystemAdapter) {
+  return class ProjectFUAdapter extends BaseSystemAdapter {
   constructor() {
     super();
     this.systemId = "projectfu";
@@ -656,4 +655,5 @@ export class ProjectFUAdapter extends BaseSystemAdapter {
       return false;
     }
   }
+  };
 }
