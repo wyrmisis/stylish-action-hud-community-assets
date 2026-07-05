@@ -1,12 +1,20 @@
-import { ProjectFUAdapter } from "./adapter.js";
+import { createProjectFUAdapter } from "./adapter.js";
 
 Hooks.once("stylish-action-hud.apiReady", (api) => {
   /* === [S001] ProjectFU =================================================== */
-  api.registerSystemAdapter("projectfu", ProjectFUAdapter, {
-    priority: 1,
-    source: "stylish-action-hud-community-assets",
-    isCompatible: (context) => context.system.id === "projectfu",
-  });
+  if (api.BaseSystemAdapter) {
+    const ProjectFUAdapter = createProjectFUAdapter(api.BaseSystemAdapter);
+
+    api.registerSystemAdapter("projectfu", ProjectFUAdapter, {
+      priority: 1,
+      source: "stylish-action-hud-community-assets",
+      isCompatible: (context) => context.system.id === "projectfu",
+    });
+  } else {
+    console.warn(
+      "Stylish Action HUD Community Assets | ProjectFU adapter requires SAH's BaseSystemAdapter API.",
+    );
+  }
 
   api.registerTheme("projectfu", {
     label: "ProjectFU",
