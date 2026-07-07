@@ -4,7 +4,9 @@ export function createProjectFUAdapter(BaseSystemAdapter) {
     super();
     this.systemId = "projectfu";
   }
-
+  // Class Features to be excluded from the Skills menu
+  static exclusionList = ["tone", "key", "ingredient", "garden"];
+	
   getStats(actor, configAttributes) {
     if (!configAttributes || configAttributes.length === 0) return [];
 
@@ -167,6 +169,7 @@ export function createProjectFUAdapter(BaseSystemAdapter) {
   }
 
   #checkForAdequateResources(actor, item) {
+	if (!item.system.cost) return false;
     const costValue = parseInt(item.system.cost.amount);
 
     if (isNaN(costValue)) return false;
@@ -201,7 +204,28 @@ export function createProjectFUAdapter(BaseSystemAdapter) {
       const cost = i.system.cost.amount ? this.#generateCostString(i) : null;
       const className = i.system.class.value;
 
-      console.info(i);
+      primaryLabels.push(className);
+      if (!items[className]) items[className] = [];
+
+      const item = {
+        id: i.id,
+        name: i.name,
+        img: i.img,
+        description: i.system.description || "",
+        cost,
+        isExhausted,
+      };
+
+      items.all.push(item);
+      items[className].push(item);
+    });
+
+	actor.itemTypes.classFeature.forEach((i) => {
+      const isExhausted = this.#checkForAdequateResources(actor, i);
+      const cost = i.system.cost?.amount ? this.#generateCostString(i) : null;
+      const className = i.system.featureType.split('.')[1];
+
+	  if (exclusionList.includes(className)) return;
 
       primaryLabels.push(className);
       if (!items[className]) items[className] = [];
@@ -211,6 +235,39 @@ export function createProjectFUAdapter(BaseSystemAdapter) {
         name: i.name,
         img: i.img,
         description: i.system.description || "",
+        cost,
+        isExhausted,
+      };
+
+      items.all.push(item);
+      items[className].push(item);
+    });
+
+	actor.itemTypes.optionalFeature.forEach((i) => {
+      const isExhausted = this.#checkForAdequateResources(actor, i);
+      const cost = i.system.cost?.amount ? this.#generateCostString(i) : null;
+      const className = i.system.optionalType.split('.')[1];
+
+	  if (exclusionList.includes(className)) return;
+
+      primaryLabels.push(className);
+      if (!items[className]) items[className] = [];
+
+	  let desc = i.system.description || "";
+
+	  if (className == "zeroPower") {
+		  desc = `<h3>${i.system.data.zeroTrigger.value ?? "Zero Trigger"}</h3>
+		  ${i.system.data.zeroTrigger.description ?? ""}
+		  <hr>
+		  <h3>${i.system.data.zeroEffect.value ?? "Zero Effect"}</h3>
+		  ${i.system.data.zeroEffect.description ?? ""}`;
+	  };
+
+      const item = {
+        id: i.id,
+        name: i.name,
+        img: i.img,
+        description: desc,
         cost,
         isExhausted,
       };
